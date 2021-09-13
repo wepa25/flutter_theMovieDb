@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:the_movie/domain/entity/popular_movie_response.dart';
+
 enum ApiClientExceptionType {
   Network,
   Auth,
@@ -21,6 +23,9 @@ class ApiClient {
   final pathMakeToken = '/authentication/token/new';
   final pathValidateUser = '/authentication/token/validate_with_login';
   final pathSession = '/authentication/session/new';
+
+
+  static String imageUrl(String path) => _imageUrl + path;
 
   Uri _makeUri(String path, [Map<String, dynamic>? parameters]) {
     final uri = Uri.parse('$_host$path');
@@ -79,12 +84,11 @@ class ApiClient {
   }
 
 
-  Future<dynamic> _popularMovie(int page, String locale) async {
+  Future<PopularMovieResponse> popularMovie(int page, String locale) async {
     final parser = (dynamic json) {
-      // final jsonMap = json as Map<String, dynamic>;
-      // final token = jsonMap['request_token'] as String;
-      // return token;
-      return json;
+      final jsonMap = json as Map<String, dynamic>;
+      final response = PopularMovieResponse.fromJson(jsonMap);
+      return response;
     };
     final result = _get(
       '/movie/popular',
