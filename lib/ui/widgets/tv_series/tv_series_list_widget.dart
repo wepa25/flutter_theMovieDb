@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:the_movie/domain/api_client/api_client.dart';
 import 'package:the_movie/library/inherited/provider.dart';
-import 'package:the_movie/ui/widgets/movie_list/app_movie_model.dart';
+import 'package:the_movie/ui/widgets/tv_series/tv_series_list_widget_model.dart';
 
-class MovieListWidget extends StatelessWidget {
+class TvSeriesListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final model = NotifierProvider.watch<MoviesListModel>(context);
+    final model = NotifierProvider.watch<TvSeriesListWidgetModel>(context);
     if (model == null) return SizedBox.shrink();
     return Stack(
       children: [
-        model.movies.isEmpty ? Center(child: CircularProgressIndicator(strokeWidth: 2,),) :
+        model.tvSeries.isEmpty ? Center(child: CircularProgressIndicator(strokeWidth: 2,),) :
         ListView.builder(
             physics: BouncingScrollPhysics(),
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             padding: EdgeInsets.only(top: 50),
             itemExtent: 163,
-            itemCount: model.movies.length,
+            itemCount: model.tvSeries.length,
             itemBuilder: (BuildContext context, int index) {
               model.showedMoviesIndex(index);
-              final movie = model.movies[index];
-              final posterPath = movie.posterPath;
+              final tvSeries = model.tvSeries[index];
+              final posterPath = tvSeries.posterPath;
               return Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                 child: Stack(
                   children: [
                     Container(
@@ -42,14 +42,13 @@ class MovieListWidget extends StatelessWidget {
                       ),
                       child: Row(
                         children: [
-                          movie.posterPath == null
+                          tvSeries.posterPath == null
                               ? SizedBox.shrink()
                               : Image.network(
-                                  ApiClient.imageUrl(posterPath as String),
-                                //  width: 95,
+                            ApiClient.imageUrl(posterPath as String),
                             fit: BoxFit.cover,
                             alignment: Alignment.centerLeft,
-                                ),
+                          ),
                           SizedBox(width: 15),
                           Expanded(
                             child: Column(
@@ -57,7 +56,7 @@ class MovieListWidget extends StatelessWidget {
                               children: [
                                 const SizedBox(height: 20,),
                                 Text(
-                                  movie.title,
+                                  tvSeries.name,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
@@ -69,7 +68,7 @@ class MovieListWidget extends StatelessWidget {
                                   height: 5,
                                 ),
                                 Text(
-                                  model.stringDate(movie.releaseDate),
+                                  model.stringDate(tvSeries.firstAirDate),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
@@ -81,7 +80,7 @@ class MovieListWidget extends StatelessWidget {
                                   height: 20,
                                 ),
                                 Text(
-                                  movie.overview,
+                                  tvSeries.overview,
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 2,
                                   style: TextStyle(

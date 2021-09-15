@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:the_movie/domain/entity/popular_movie_response.dart';
+import 'package:the_movie/domain/entity/tv_popular_series_response.dart';
 
 enum ApiClientExceptionType {
   Network,
@@ -96,6 +97,61 @@ class ApiClient {
       <String, dynamic>{
         'api_key': _apiKey,
          'page': page.toString(),
+        'language' : locale},
+    );
+    return result;
+  }
+
+  Future<TvPopularSeriesResponse> tvPopularSeries(int page, String locale) async {
+    final parser = (dynamic json) {
+      final jsonMap = json as Map<String, dynamic>;
+      final response = TvPopularSeriesResponse.fromJson(jsonMap);
+      return response;
+    };
+    final result = _get(
+      '/tv/popular',
+      parser,
+      <String, dynamic>{
+        'api_key': _apiKey,
+        'language' : locale,
+        'page': page.toString(),
+        },
+     );
+    return result;
+  }
+
+  Future<PopularMovieResponse> searchMovie(int page, String locale, String query) async {
+    final parser = (dynamic json) {
+      final jsonMap = json as Map<String, dynamic>;
+      final response = PopularMovieResponse.fromJson(jsonMap);
+      return response;
+    };
+    final result = _get(
+      '/search/movie',
+      parser,
+      <String, dynamic>{
+        'api_key': _apiKey,
+        'page': page.toString(),
+        'query': query,
+        'language' : locale},
+    );
+    return result;
+  }
+
+
+  Future<TvPopularSeriesResponse> searchTvSeries(int page, String locale, String query) async {
+    final parser = (dynamic json) {
+      final jsonMap = json as Map<String, dynamic>;
+      final response = TvPopularSeriesResponse.fromJson(jsonMap);
+      return response;
+    };
+    final result = _get(
+      '/search/tv',
+      parser,
+      <String, dynamic>{
+        'api_key': _apiKey,
+        'page': page.toString(),
+        'query': query,
         'language' : locale},
     );
     return result;

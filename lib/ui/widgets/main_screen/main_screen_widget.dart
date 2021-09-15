@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:the_movie/domain/session_data_provider/session_data_provider.dart';
 import 'package:the_movie/library/inherited/provider.dart';
-import 'package:the_movie/styles/styles_of_app_widget.dart';
 import 'package:the_movie/ui/widgets/main_screen/main_screen_model.dart';
 import 'package:the_movie/ui/widgets/movie_list/app_movie_model.dart';
+import 'package:the_movie/ui/widgets/tv_series/tv_series_list_widget.dart';
+import 'package:the_movie/ui/widgets/tv_series/tv_series_list_widget_model.dart';
 import '../movie_list/app_movie_widget.dart';
 
 class MainScreenWidget extends StatefulWidget {
@@ -14,16 +15,17 @@ class MainScreenWidget extends StatefulWidget {
 class _MainScreenWidgetState extends State<MainScreenWidget> {
   var _selectedIndex = 0;
   final  movieListModel = MoviesListModel();
+  final tvSeriesModel = TvSeriesListWidgetModel();
   static const TextStyle optionStyle =
       TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.w700);
 
   @override
-  void didChangeDependencies() {
+  Future<void> didChangeDependencies() async {
     super.didChangeDependencies();
-
-    movieListModel.setupLocale(context);
-
+    await tvSeriesModel.setupLocale(context);
+    await movieListModel.setupLocale(context);
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,6 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
       appBar: AppBar(
         title: Text('TMDB', style: TextStyle(color: Colors.blue[200])),
         centerTitle: true,
-      //  brightness: Brightness.dark,
         actions: [
           IconButton(
               onPressed: () => SessionDataProvider().setSessionId(null),
@@ -48,10 +49,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
             style: optionStyle,
           ),
           NotifierProvider(model: movieListModel,child: MovieListWidget()),
-          Text(
-            'Сериалы',
-            style: optionStyle,
-          ),
+          NotifierProvider(model: tvSeriesModel,child: TvSeriesListWidget()),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
