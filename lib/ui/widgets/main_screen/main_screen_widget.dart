@@ -48,8 +48,8 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
             'Новости',
             style: optionStyle,
           ),
-          NotifierProvider(model: movieListModel,child: MovieListWidget()),
-          NotifierProvider(model: tvSeriesModel,child: TvSeriesListWidget()),
+          NotifierProvider(create:() => movieListModel,isManagingModel: false,child: MovieListWidget()),
+          NotifierProvider(create:() => tvSeriesModel,child: TvSeriesListWidget()),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

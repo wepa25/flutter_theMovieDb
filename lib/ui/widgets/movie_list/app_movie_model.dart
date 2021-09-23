@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:the_movie/domain/api_client/api_client.dart';
-import 'package:the_movie/domain/entity/movie.dart';
-import 'package:the_movie/domain/entity/popular_movie_response.dart';
+import 'package:the_movie/domain/entity/popular_movie/movie.dart';
+import 'package:the_movie/domain/entity/popular_movie/popular_movie_response.dart';
 import 'package:the_movie/ui/navigation/main_navigation.dart';
 
 class MoviesListModel extends ChangeNotifier{

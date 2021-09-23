@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:the_movie/domain/entity/popular_movie_response.dart';
-import 'package:the_movie/domain/entity/tv_popular_series_response.dart';
+import 'package:the_movie/domain/entity/movie_details/movie_details.dart';
+import 'package:the_movie/domain/entity/popular_movie/popular_movie_response.dart';
+import 'package:the_movie/domain/entity/tv_series/tv_popular_series_response.dart';
 
 enum ApiClientExceptionType {
   Network,
@@ -97,7 +98,8 @@ class ApiClient {
       <String, dynamic>{
         'api_key': _apiKey,
          'page': page.toString(),
-        'language' : locale},
+        'language' : locale
+          },
     );
     return result;
   }
@@ -117,6 +119,41 @@ class ApiClient {
         'page': page.toString(),
         },
      );
+    return result;
+  }
+
+  Future<MovieDetails> movieDetails(int movieId, String locale) async {
+    final parser = (dynamic json) {
+      final jsonMap = json as Map<String, dynamic>;
+      final response = MovieDetails.fromJson(jsonMap);
+      return response;
+    };
+    final result = _get(
+      '/movie/$movieId',
+      parser,
+      <String, dynamic>{
+        'append_to_response' : 'credits',
+        'api_key': _apiKey,
+        'language' : locale,
+      },
+    );
+    return result;
+  }
+
+  Future<MovieDetails> tvSeriesDetails(int movieId, String locale) async {
+    final parser = (dynamic json) {
+      final jsonMap = json as Map<String, dynamic>;
+      final response = MovieDetails.fromJson(jsonMap);
+      return response;
+    };
+    final result = _get(
+      '/tv/$movieId',
+      parser,
+      <String, dynamic>{
+        'api_key': _apiKey,
+        'language' : locale,
+      },
+    );
     return result;
   }
 

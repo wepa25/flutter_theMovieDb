@@ -9,7 +9,7 @@ part of 'tv_series.dart';
 TvSeries _$TvSeriesFromJson(Map<String, dynamic> json) {
   return TvSeries(
     json['poster_path'] as String?,
-    json['popularity'] as double,
+    (json['popularity'] as num).toDouble(),
     json['id'] as int,
     json['backdrop_path'] as String?,
     json['vote_average'] as num,

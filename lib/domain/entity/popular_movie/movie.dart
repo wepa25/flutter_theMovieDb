@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:the_movie/domain/entity/movie_date_parser.dart';
 
 part 'movie.g.dart';
 
@@ -7,7 +8,7 @@ class Movie{
   final String? posterPath;
   final bool adult;
   final String overview;
-  @JsonKey(fromJson: _parseDate)
+  @JsonKey(fromJson: movieDateParser)
   final DateTime? releaseDate;
   final List<int> genreIds;
   final int id;
@@ -37,13 +38,9 @@ class Movie{
       this.voteAverage);
 
   factory Movie.fromJson(Map<String, dynamic> json) => _$MovieFromJson(json);
-
   Map<String, dynamic> toJson() => _$MovieToJson(this);
 
-  static DateTime? _parseDate(String? releaseDate){
-    if(releaseDate == null || releaseDate.isEmpty) return null;
-      return DateTime.tryParse(releaseDate);
-    }
+
   }
 
 

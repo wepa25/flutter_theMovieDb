@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:the_movie/domain/api_client/api_client.dart';
-import 'package:the_movie/domain/entity/tv_popular_series_response.dart';
-import 'package:the_movie/domain/entity/tv_series.dart';
+import 'package:the_movie/domain/entity/tv_series/tv_popular_series_response.dart';
+import 'package:the_movie/domain/entity/tv_series/tv_series.dart';
 import 'package:the_movie/ui/navigation/main_navigation.dart';
 
 class TvSeriesListWidgetModel extends ChangeNotifier{

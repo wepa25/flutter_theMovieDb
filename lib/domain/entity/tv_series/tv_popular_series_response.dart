@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:the_movie/domain/entity/tv_series.dart';
+import 'package:the_movie/domain/entity/tv_series/tv_series.dart';
 
 part 'tv_popular_series_response.g.dart';
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:the_movie/domain/api_client/api_client.dart';
 import 'package:the_movie/library/inherited/provider.dart';
 import 'package:the_movie/ui/widgets/movie_list/app_movie_model.dart';
+import 'package:the_movie/ui/widgets/movie_list/movies_images.dart';
 
 class MovieListWidget extends StatelessWidget {
   @override
@@ -43,7 +44,8 @@ class MovieListWidget extends StatelessWidget {
                       child: Row(
                         children: [
                           movie.posterPath == null
-                              ? SizedBox.shrink()
+                              ? Image(image: MoviesImages.movie, fit: BoxFit.cover,
+                            alignment: Alignment.centerLeft,)
                               : Image.network(
                                   ApiClient.imageUrl(posterPath as String),
                                 //  width: 95,
